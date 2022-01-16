@@ -18,8 +18,7 @@ func main() {
 		case 1:
 			fmt.Println("endereco da memoria", &opcao)
 			fmt.Println("Monitar site")
-			resp := monitoraSites()
-			fmt.Println(resp.StatusCode)
+			monitoraSites(montaArraySites())
 		case 2:
 			fmt.Println("Saindo...")
 			os.Exit(0)
@@ -49,11 +48,35 @@ func leCmd(nome string) int16 {
 	return opcao
 }
 
-func monitoraSites() *http.Response {
-	fmt.Println("Monitorando...")
-	resp, err := http.Get("http://google.com.br")
-	if err != nil {
-		fmt.Println(err)
+func monitoraSites(sites []string) {
+	fmt.Println("Monitorando sites...")
+
+	for _, site := range sites {
+		resp, err := http.Get(site)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		if resp.StatusCode == 200 {
+			fmt.Println("Site:", site, "working...")
+		} else {
+			fmt.Println("Site:", site, "com problemas, codigo de resposta:", resp.StatusCode)
+		}
 	}
-	return resp
+
+	// for tradicional
+	// for i := 0; i < len(sites); i++ {
+	// 	site := sites[i]
+	// }
+}
+
+func montaArraySites() []string {
+	sites := []string{"https://www.google.com", "https://www.alura.com.br"}
+	//atencao a = nesse ponto para pop/modify variaveis
+	sites = append(sites, "https://aws.amazon.com/tp")
+
+	//capacidade do slice
+	fmt.Println("Capacidade do slice:", cap(sites))
+	return sites
 }
