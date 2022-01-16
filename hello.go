@@ -9,21 +9,24 @@ import (
 
 func main() {
 
-	exibeIntro()
+	for {
+		exibeIntro()
 
-	opcao := leCmd("Thiago")
+		opcao := leCmd("Thiago")
 
-	switch opcao {
-	case 1:
-		fmt.Println("endereco da memoria", &opcao)
-		fmt.Println("Monitar site")
-		resp := monitoraSites()
-		fmt.Println(resp.StatusCode)
-	case 2:
-		fmt.Println("entao foldase")
-	default:
-		fmt.Println("opcao nao existe")
-		os.Exit(0)
+		switch opcao {
+		case 1:
+			fmt.Println("endereco da memoria", &opcao)
+			fmt.Println("Monitar site")
+			resp := monitoraSites()
+			fmt.Println(resp.StatusCode)
+		case 2:
+			fmt.Println("Saindo...")
+			os.Exit(0)
+		default:
+			fmt.Println("opcao nao existe")
+			os.Exit(-1)
+		}
 	}
 }
 
@@ -35,8 +38,8 @@ func exibeIntro() {
 	fmt.Println("Hello", nome, "tipo int value:", tipoInt)
 	fmt.Println("Version", versao, "tipo int", reflect.TypeOf(versao))
 
-	fmt.Println("1 - Opcao foldase")
-	fmt.Println("2 - Opcao foldase e meio")
+	fmt.Println("1 - monitorar site")
+	fmt.Println("2 - Sair")
 }
 
 func leCmd(nome string) int16 {
